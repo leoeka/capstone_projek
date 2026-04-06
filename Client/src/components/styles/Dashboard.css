@@ -1,0 +1,29 @@
+.dashboard-content { padding: 10px 0; }
+
+.card-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.summary-card {
+  background: #f0f4ff;
+  border-radius: 8px;
+  padding: 16px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.match-status { background: #d4edda; }
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .button-group { flex-direction: column; }
+  .button-group button { width: 100%; }
+}

@@ -1,0 +1,43 @@
+.job-detail-content { padding: 10px 0; }
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: #1a73e8;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.detail-section {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.job-description { flex: 1; }
+
+.match-circle-container {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.skill-section { margin-bottom: 16px; }
+
+.apply-btn { margin-top: 8px; }
+
+@media (max-width: 600px) {
+  .detail-section { flex-direction: column; }
+
+  .match-circle-container {
+    width: 120px;
+    align-self: center;
+  }
+
+  .apply-btn { width: 100%; }
+}

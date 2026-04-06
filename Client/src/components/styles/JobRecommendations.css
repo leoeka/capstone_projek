@@ -1,0 +1,31 @@
+.job-recommendations-content { padding: 10px 0; }
+
+.jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.job-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  flex-wrap: wrap;
+}
+
+.job-info { flex: 1; min-width: 120px; }
+.job-info h3 { margin-bottom: 4px; }
+.job-info p { color: #666; font-size: 14px; margin-bottom: 2px; }
+
+.match-score { font-weight: bold; color: #333; white-space: nowrap; }
+.match-value { color: #28a745; }
+
+@media (max-width: 480px) {
+  .job-card { flex-direction: column; align-items: flex-start; }
+  .details-btn { width: 100%; }
+}

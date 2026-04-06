@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+Client/node_modules/
+Server/node_modules/
+
+# Build output
+dist/
+dist-ssr/
+Client/dist/
+
+# Environment variables (JANGAN di-commit!)
+.env
+.env.local
+.env.production
+Server/.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+
+# Misc
+*.local
+*.suo
+*.sw?
