@@ -100,7 +100,7 @@
     text-align: right;
 }
 
-.btn-group {
+.button-group {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
@@ -138,4 +138,38 @@
 
 .fill-yellow {
     background: #f59e0b;
+}
+
+.text-green {
+    color: #16a34a;
+}
+
+.text-blue {
+    color: #2563eb;
+}
+
+.text-yellow {
+    color: #f59e0b;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .profil-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .skill-label {
+        width: 70px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-outline {
+        width: 100%;
+        text-align: center;
+    }
 }
