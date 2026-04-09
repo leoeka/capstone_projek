@@ -1,7 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './styles/Dashboard.css'
 
 const Dashboard = () => {
+  const navigate = useNavigate()
   return (
     <div className="dashboard-content">
       <h2>Dashboard</h2>
@@ -19,8 +21,8 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="button-group">
-          <button className="primary-btn">Upload CV</button>
-          <button className="secondary-btn">Lihat Rekomendasi</button>
+          <button className="primary-btn" onClick={() => navigate('/upload-cv')}>Upload CV</button>
+          <button className="secondary-btn" onClick={() => navigate('/rekomendasi')}>Lihat Rekomendasi</button>
         </div>
       </div>
     </div>

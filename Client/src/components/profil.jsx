@@ -1,4 +1,5 @@
 import './styles/profil.css';
+import { useNavigate } from 'react-router-dom';
 
 const skills = [
     { name: "JavaScript", pct: 80, color: "green" },
@@ -7,6 +8,7 @@ const skills = [
 ];
 
 const Profil = () => {
+    const navigate = useNavigate();
     return (
         <div className="profil-content">
 
@@ -45,7 +47,7 @@ const Profil = () => {
 
             {/* Tombol */}
             <div className="button-group">
-                <button className="btn-primary">Upload CV Baru</button>
+                <button className="btn-primary" onClick={() => navigate('/upload-cv')}>Upload CV Baru</button>
                 <button className="btn-outline">Edit Profil</button>
             </div>
         </div>

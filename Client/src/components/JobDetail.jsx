@@ -32,11 +32,18 @@ const JobDetail = () => {
           </ul>
         </div>
         <div className="match-circle-container">
+          <p className="match-label">Kecocokan Anda</p>
           <CircularProgressbar
             value={jobDetail.match}
-            text={`${jobDetail.match}% Match`}
-            styles={buildStyles({ pathColor: '#28A745', textColor: '#28A745', trailColor: '#eee' })}
+            text={`${jobDetail.match}%`}
+            styles={buildStyles({
+              pathColor: '#28A745',
+              textColor: '#28A745',
+              trailColor: '#eee',
+              textSize: '18px',
+            })}
           />
+          <p className="match-sublabel">Match</p>
         </div>
       </div>
       <div className="skill-section">

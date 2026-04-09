@@ -20,7 +20,6 @@ const UploadCV = () => {
             <span className="docx-icon">DOCX</span>
           </div>
           <p>Drag & Drop file disini</p>
-          <p className="or-text">atau</p>
         </div>
       </div>
       <button className="primary-btn upload-btn">Upload & Analisis</button>
