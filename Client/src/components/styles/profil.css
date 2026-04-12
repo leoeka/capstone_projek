@@ -1,4 +1,4 @@
-/* Profil.css */ 
+/* Profil.css */
 
 .profil-content {
     padding: 10px 0;
@@ -152,6 +152,33 @@
     color: #f59e0b;
 }
 
+/* Profil.css */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.form-group input {
+    padding: 9px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #1b2b5e;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
     .profil-header {
@@ -171,5 +198,9 @@
     .btn-outline {
         width: 100%;
         text-align: center;
+    }
+
+    .form-group input {
+        font-size: 16px;
     }
 }

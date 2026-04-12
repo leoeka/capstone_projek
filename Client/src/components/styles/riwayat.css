@@ -1,0 +1,99 @@
+.riwayat-content {
+    padding: 10px 0;
+}
+
+.riwayat-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1b2b5e;
+    margin-bottom: 16px;
+}
+
+.riwayat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.riwayat-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f0f4ff;
+    border-radius: 8px;
+    padding: 14px 16px;
+    gap: 12px;
+}
+
+.riwayat-posisi {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1b2b5e;
+    margin: 0 0 4px;
+}
+
+.riwayat-perusahaan {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 2px;
+}
+
+.riwayat-tanggal {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 2px;
+}
+
+.riwayat-match {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 2px;
+}
+
+/* Badge status */
+.riwayat-badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 99px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.status-diterima {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-ditolak {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.status-proses {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-menunggu {
+    background: #fef3c7;
+    color: #808080;
+}
+
+/* Kosong */
+.riwayat-kosong {
+    background: #f0f4ff;
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* KResponsive mobile */
+@media (max-width: 768px) {
+    .riwayat-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

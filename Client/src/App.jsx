@@ -7,6 +7,7 @@ import UploadCV from './components/UploadCV.jsx'
 import JobRecommendations from './components/JobRecommendations.jsx'
 import JobDetail from './components/JobDetail.jsx'
 import Profil from './components/profil.jsx'
+import Riwayat from './components/riwayat.jsx'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/upload-cv" element={<UploadCV />} />
             <Route path="/job/:id" element={<JobDetail />} />
             <Route path="/profil" element={<Profil />} />
+            <Route path="/riwayat" element={<Riwayat />} />
           </Routes>
         </div>
       </div>
