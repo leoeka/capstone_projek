@@ -22,7 +22,7 @@ const Sidebar = () => {
       {/* Mobile top bar */}
       <div className="mobile-topbar">
         <div className="logo-container">
-          <span className="logo">3</span> Jobs
+          <span className="logo">KarirKu</span>AI
         </div>
         <button className="hamburger" onClick={() => setOpen(!open)}>
           <FontAwesomeIcon icon={open ? faTimes : faBars} />
@@ -35,7 +35,7 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div className={`sidebar ${open ? 'sidebar-open' : ''}`}>
         <div className="logo-container desktop-logo">
-          <span className="logo">3</span> Jobs
+          <span className="logo">KarirKu</span>AI
         </div>
         {user && (
           <div className="sidebar-user">
