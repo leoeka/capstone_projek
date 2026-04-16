@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThLarge, faPlusSquare, faFileUpload, faHistory, faUserCircle, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { useAuth } from '../context/AuthContext'
 import './styles/Sidebar.css'
 
 const navItems = [
@@ -14,6 +15,7 @@ const navItems = [
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false)
+  const { user } = useAuth()
 
   return (
     <>
@@ -35,6 +37,15 @@ const Sidebar = () => {
         <div className="logo-container desktop-logo">
           <span className="logo">3</span> Jobs
         </div>
+        {user && (
+          <div className="sidebar-user">
+            <div className="sidebar-avatar">{user.name?.charAt(0).toUpperCase()}</div>
+            <div className="sidebar-user-info">
+              <span className="sidebar-user-name">{user.name}</span>
+              <span className="sidebar-user-role">{user.role}</span>
+            </div>
+          </div>
+        )}
         <nav className="sidebar-nav">
           <ul>
             {navItems.map(({ to, icon, label }) => (
