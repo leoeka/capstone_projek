@@ -1,4 +1,6 @@
-.upload-cv-content { padding: 10px 0; }
+.upload-cv-content {
+  padding: 10px 0;
+}
 
 .drop-zone {
   border: 2px dashed #1a73e8;
@@ -33,7 +35,8 @@
   margin-bottom: 12px;
 }
 
-.pdf-icon, .docx-icon {
+.pdf-icon,
+.docx-icon {
   background: #1a73e8;
   color: #fff;
   padding: 6px 12px;
@@ -48,10 +51,46 @@
   transform: scale(1.02);
 }
 
-.or-text { color: #888; margin-top: 4px; }
+.or-text {
+  color: #888;
+  margin-top: 4px;
+}
 
-.upload-btn { margin-top: 4px; }
+.upload-btn {
+  margin-top: 4px;
+}
+
+.file-selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f0f4ff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #1b2b5e;
+}
+
+.btn-hapus {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-hapus:hover {
+  text-decoration: underline;
+}
+
+.file-name-link:hover {
+  color: #1b2b5e;
+}
 
 @media (max-width: 480px) {
-  .upload-btn { width: 100%; }
+  .upload-btn {
+    width: 100%;
+  }
 }

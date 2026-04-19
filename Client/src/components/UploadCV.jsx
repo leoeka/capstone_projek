@@ -73,7 +73,14 @@ const UploadCV = () => {
         onChange={handleFileChange}
       />
       <button className="primary-btn upload-btn">Upload & Analisis</button>
-      {file && <p>File terpilih: {file.name}</p>}
+      {file && (
+        <div className="file-selected">
+          <span className="file-name-link" onClick={() => window.open(URL.createObjectURL(file), '_blank')}>
+            {file.name}
+          </span>
+          <button className="btn-hapus" onClick={() => setFile(null)}>X Hapus</button>
+        </div>
+      )}
     </div>
   )
 }

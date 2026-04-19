@@ -20,6 +20,7 @@ const Profil = () => {
     email: user?.email || '',
     telepon: user?.telepon || '',
   })
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
@@ -108,8 +109,22 @@ const Profil = () => {
         {!isEditing && (
           <button className="btn-outline" onClick={() => setIsEditing(true)}>Edit Profil</button>
         )}
-        <button className="btn-logout" onClick={handleLogout}>Keluar</button>
+        <button className="btn-logout" onClick={() => setShowLogoutModal(true)}>Keluar</button>
       </div>
+
+      {/* Pop up konfirmasi logout */}
+      {showLogoutModal && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <p className="modal-title">Yakin ingin keluar?</p>
+            <p className="modal-sub">Anda akan keluar dari akun ini.</p>
+            <div className="modal-actions">
+              <button className="btn-outline" onClick={() => setShowLogoutModal(false)}>Batal</button>
+              <button className="btn-logout" onClick={() => { setShowLogoutModal(false); handleLogout(); }}>Ya, Keluar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

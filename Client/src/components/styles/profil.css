@@ -143,6 +143,10 @@
     background: #fdecea;
 }
 
+.btn-outline:hover {
+    background: #f0f4ff;
+}
+
 .fill-green {
     background: #16a34a;
 }
@@ -192,6 +196,43 @@
 
 .form-group input:focus {
     border-color: #2563eb;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.modal-title {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 20px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-actions .btn-outline,
+.modal-actions .btn-logout {
+    flex: 1;
 }
 
 /* Responsive Design */
