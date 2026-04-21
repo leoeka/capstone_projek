@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import './Auth.css'
 
 const EyeOpen = () => (
@@ -30,10 +30,11 @@ const Register = () => {
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
+  const [success, setSuccess] = useState('')
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (form.password !== form.confirmPassword) {
       setError('Password dan konfirmasi password tidak sama')
@@ -44,9 +45,10 @@ const Register = () => {
       return
     }
     const { confirmPassword: _confirmPassword, ...data } = form
-    const result = register(data)
+    const result = await register(data)
     if (result.success) {
-      navigate('/login')
+      setSuccess('Registrasi berhasil! Silahkan login.')
+      setTimeout(() => navigate('/login'), 2000)
     } else {
       setError(result.message)
     }
@@ -61,6 +63,7 @@ const Register = () => {
         <p className="auth-sub">Isi data diri kamu untuk memulai</p>
 
         {error && <div className="auth-error">{error}</div>}
+        {success && <div className="auth-success">{success}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -74,7 +77,7 @@ const Register = () => {
               required
             />
           </div>
-          {/* <div className="form-group">
+          <div className="form-group">
             <label>Role / Posisi</label>
             <input
               type="text"
@@ -84,7 +87,7 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-          </div> */}
+          </div>
           <div className="form-group">
             <label>Email</label>
             <input

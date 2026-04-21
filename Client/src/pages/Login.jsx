@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import './Auth.css'
 
 const EyeOpen = () => (
@@ -25,9 +25,9 @@ const Login = () => {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const result = login(form.email, form.password)
+    const result = await login(form.email, form.password)
     if (result.success) {
       navigate('/dashboard')
     } else {

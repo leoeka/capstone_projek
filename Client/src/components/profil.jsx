@@ -1,7 +1,7 @@
 import './styles/profil.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 
 const skills = [
   { name: 'JavaScript', pct: 80, color: 'green' },
