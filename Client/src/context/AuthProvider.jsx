@@ -53,10 +53,22 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token')
   }
 
-  const updateUser = (data) => {
-    const updated = { ...user, ...data }
-    setUser(updated)
-    localStorage.setItem('user', JSON.stringify(updated))
+  const updateUser = async (data) => {
+    try {
+      const token = localStorage.getItem('token')
+      const { photo, ...dataWithoutPhoto } = data
+
+      // simpan data teks ke database
+      const res = await axios.put(`${API}/profile`, dataWithoutPhoto, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      const updated = { ...res.data.user, photo: photo || user?.photo || '' }
+      setUser(updated)
+      localStorage.setItem('user', JSON.stringify(updated))
+      return { success: true }
+    } catch (error) {
+      return { success: false, message: error.response?.data?.message || 'Gagal update profil' }
+    }
   }
 
   return (

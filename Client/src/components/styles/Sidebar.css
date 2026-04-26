@@ -15,6 +15,7 @@
   padding: 20px;
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
 .logo {
@@ -94,6 +95,8 @@
 .mobile-topbar {
   display: none;
   position: fixed;
+  padding: 0;
+  font-size: 20px;
   top: 0;
   left: 0;
   right: 0;

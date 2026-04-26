@@ -35,11 +35,17 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div className={`sidebar ${open ? 'sidebar-open' : ''}`}>
         <div className="logo-container desktop-logo">
-          <span className="logo">KarirKu</span>AI
+          <span className="logo">KarirKu</span><span>AI</span>
         </div>
         {user && (
           <div className="sidebar-user">
-            <div className="sidebar-avatar">{user.name?.charAt(0).toUpperCase()}</div>
+            <div className="profil-avatar">
+              {user?.photo ? (
+                <img src={user.photo} alt="profile" className="avatar-img" />
+              ) : (
+                user?.name?.charAt(0).toUpperCase()
+              )}
+            </div>
             <div className="sidebar-user-info">
               <span className="sidebar-user-name">{user.name}</span>
               <span className="sidebar-user-role">{user.role}</span>

@@ -55,14 +55,23 @@ const UploadCV = () => {
         }}>
         <div className="drop-zone-icon-text">
           <div className="file-icons">
-            <span className="pdf-icon" onClick={openFilePicker}>
-              PDF
-            </span>
-            <span className="docx-icon" onClick={openFilePicker}>
-              DOCX
-            </span>
+            <span className="pdf-icon" onClick={openFilePicker}>PDF</span>
+            <span className="docx-icon" onClick={openFilePicker}>DOCX</span>
           </div>
-          <p>Drag & Drop file disini atau klik ikon di atas</p>
+          {!file ? (
+            <p>Drag & Drop file disini atau klik ikon di atas</p>
+          ) : (
+            <div className="file-selected">
+              <span
+                className="file-name-link"
+                onClick={() => window.open(URL.createObjectURL(file), '_blank')}
+                title="Klik untuk lihat file"
+              >
+                {file.name}
+              </span>
+              <button className="btn-hapus" onClick={(e) => { e.stopPropagation(); setFile(null) }}>✕ Hapus</button>
+            </div>
+          )}
         </div>
       </div>
       <input
@@ -72,15 +81,7 @@ const UploadCV = () => {
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
-      <button className="primary-btn upload-btn">Upload & Analisis</button>
-      {file && (
-        <div className="file-selected">
-          <span className="file-name-link" onClick={() => window.open(URL.createObjectURL(file), '_blank')}>
-            {file.name}
-          </span>
-          <button className="btn-hapus" onClick={() => setFile(null)}>X Hapus</button>
-        </div>
-      )}
+      <button className="primary-btn upload-btn" disabled={!file}>Upload & Analisis</button>
     </div>
   )
 }
