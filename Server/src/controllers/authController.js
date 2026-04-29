@@ -74,4 +74,21 @@ const getMe = async (req, res) => {
     }
 }
 
-module.exports = { register, login, getMe }
+const updateProfile = async (req, res) => {
+    const { name, email, telepon, role } = req.body
+
+    try {
+        const result = await pool.query(
+            'UPDATE users SET name=$1, email=$2, telepon=$3, role=$4 WHERE id=$5 RETURNING id, name, email, telepon, role',
+            [name, email, telepon, role, req.user.id]
+        )
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'User tidak ditemukan' })
+        }
+        res.json({ message: 'Profil berhasil diupdate', user: result.rows[0] })
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message })
+    }
+}
+
+module.exports = { register, login, getMe, updateProfile }

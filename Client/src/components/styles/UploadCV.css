@@ -85,8 +85,17 @@
   text-decoration: underline;
 }
 
+.file-name-link {
+  color: #1a73e8;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 13px;
+  word-break: break-all;
+}
+
 .file-name-link:hover {
-  color: #1b2b5e;
+  color: #1558b0;
 }
 
 @media (max-width: 480px) {

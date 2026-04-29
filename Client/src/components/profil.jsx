@@ -19,14 +19,25 @@ const Profil = () => {
     role: user?.role || '',
     email: user?.email || '',
     telepon: user?.telepon || '',
+    photo: user?.photo || '',
   })
   const [showLogoutModal, setShowLogoutModal] = useState(false)
 
+  const [error, setError] = useState('')
+  const [successMsg, setSuccessMsg] = useState('')
+
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSimpan = () => {
-    updateUser(form)
-    setIsEditing(false)
+  const handleSimpan = async () => {
+    setError('')
+    setSuccessMsg('')
+    const result = await updateUser(form)
+    if (result.success) {
+      setSuccessMsg('Profil berhasil diperbarui')
+      setIsEditing(false)
+    } else {
+      setError(result.message)
+    }
   }
 
   const handleBatal = () => {
@@ -42,10 +53,22 @@ const Profil = () => {
   return (
     <div className="profil-content">
 
+      {/* Notifikasi */}
+      {successMsg && <div className="profil-success">{successMsg}</div>}
+      {error && <div className="profil-error">{error}</div>}
+
       {/* Header */}
       <div className="profil-header">
         <div className="profil-avatar">
-          {user?.name?.charAt(0).toUpperCase()}
+          {(isEditing ? form.photo : user?.photo) ? (
+            <img
+              src={isEditing ? form.photo : user?.photo}
+              alt="profile"
+              className="avatar-img"
+            />
+          ) : (
+            user?.name?.charAt(0).toUpperCase()
+          )}
         </div>
         <div>
           <p className="profil-name">{user?.name}</p>
@@ -66,6 +89,18 @@ const Profil = () => {
       {isEditing && (
         <div className="profil-section">
           <h3>Edit Profil</h3>
+          <div className="form-group">
+            <input type='file' accept='image/*' onChange={(e) => {
+              const file = e.target.files[0]
+              if (file) {
+                const reader = new FileReader()
+                reader.onloadend = () => {
+                  setForm({ ...form, photo: reader.result })
+                }
+                reader.readAsDataURL(file)
+              }
+            }} />
+          </div>
           <div className="form-group">
             <label>Nama</label>
             <input name="name" value={form.name} onChange={handleChange} />
