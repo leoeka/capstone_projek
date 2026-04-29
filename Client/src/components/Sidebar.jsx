@@ -41,7 +41,7 @@ const Sidebar = () => {
           <div className="sidebar-user">
             <div className="profil-avatar">
               {user?.photo ? (
-                <img src={user.photo} alt="profile" className="avatar-img" />
+                <img src={`http://localhost:5000${user.photo}`} alt="profile" className="avatar-img" />
               ) : (
                 user?.name?.charAt(0).toUpperCase()
               )}

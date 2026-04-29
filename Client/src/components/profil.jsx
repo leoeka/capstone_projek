@@ -1,5 +1,5 @@
 import './styles/profil.css'
-import { useNavigate } from 'react-router-dom'
+import { Form, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../context/useAuth'
 
@@ -19,10 +19,12 @@ const Profil = () => {
     role: user?.role || '',
     email: user?.email || '',
     telepon: user?.telepon || '',
-    photo: user?.photo || '',
   })
-  const [showLogoutModal, setShowLogoutModal] = useState(false)
 
+  const [photoFile, setPhotoFile] = useState(null)
+  const [previewUrl, setPreviewUrl] = useState(null)
+
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
   const [error, setError] = useState('')
   const [successMsg, setSuccessMsg] = useState('')
 
@@ -31,10 +33,22 @@ const Profil = () => {
   const handleSimpan = async () => {
     setError('')
     setSuccessMsg('')
-    const result = await updateUser(form)
+
+    const formData = new FormData()
+    formData.append('name', form.name)
+    formData.append('role', form.role)
+    formData.append('email', form.email)
+    formData.append('telepon', form.telepon)
+    if (photoFile) {
+      formData.append('photo', photoFile)
+    }
+
+    const result = await updateUser(formData)
     if (result.success) {
       setSuccessMsg('Profil berhasil diperbarui')
       setIsEditing(false)
+      setPhotoFile(null)
+      setPreviewUrl(null)
     } else {
       setError(result.message)
     }
@@ -60,9 +74,9 @@ const Profil = () => {
       {/* Header */}
       <div className="profil-header">
         <div className="profil-avatar">
-          {(isEditing ? form.photo : user?.photo) ? (
+          {(previewUrl || user?.photo) ? (
             <img
-              src={isEditing ? form.photo : user?.photo}
+              src={previewUrl || `http://localhost:5000${user.photo}`}
               alt="profile"
               className="avatar-img"
             />
@@ -93,11 +107,8 @@ const Profil = () => {
             <input type='file' accept='image/*' onChange={(e) => {
               const file = e.target.files[0]
               if (file) {
-                const reader = new FileReader()
-                reader.onloadend = () => {
-                  setForm({ ...form, photo: reader.result })
-                }
-                reader.readAsDataURL(file)
+                setPhotoFile(file)
+                setPreviewUrl(URL.createObjectURL(file))
               }
             }} />
           </div>

@@ -54,7 +54,8 @@ const login = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 telepon: user.telepon,
-                role: user.role
+                role: user.role,
+                photo: user.photo
             }
         })
     } catch (err) {
@@ -64,7 +65,7 @@ const login = async (req, res) => {
 
 const getMe = async (req, res) => {
     try {
-        const result = await pool.query('SELECT id, name, email, telepon, role FROM users WHERE id = $1', [req.user.id])
+        const result = await pool.query('SELECT id, name, email, telepon, role, photo FROM users WHERE id = $1', [req.user.id])
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'User Tidak Ditemukan' })
         }
@@ -76,11 +77,16 @@ const getMe = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     const { name, email, telepon, role } = req.body
+    let photoPath = null
+
+    if (req.file) {
+        photoPath = `/uploads/profiles/${req.file.filename}`
+    }
 
     try {
         const result = await pool.query(
-            'UPDATE users SET name=$1, email=$2, telepon=$3, role=$4 WHERE id=$5 RETURNING id, name, email, telepon, role',
-            [name, email, telepon, role, req.user.id]
+            'UPDATE users SET name=$1, email=$2, telepon=$3, role=$4, photo=COALESCE($5, photo) WHERE id=$6 RETURNING id, name, email, telepon, role, photo',
+            [name, email, telepon, role, photoPath, req.user.id]
         )
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'User tidak ditemukan' })
@@ -91,4 +97,22 @@ const updateProfile = async (req, res) => {
     }
 }
 
-module.exports = { register, login, getMe, updateProfile }
+const uploadCV = async (req, res) => {
+    if (!req.file) return res.status(400).json({ message: 'File CV tidak ditemukan' })
+
+    const cvPath = `/uploads/cvs/${req.file.filename}`
+
+    try {
+        const result = await pool.query(
+            'INSERT into users_cvs (user_id, file_path, status_analisis) VALUES ($1, $2, $3) RETURNING *',
+            [req.user.id, cvPath, 'pending']
+        )
+        res.status(201).json({ message: 'CV berhasil diupload dan sedang dianalisis', cv: result.rows[0] })
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message })
+    }
+}
+
+
+
+module.exports = { register, login, getMe, updateProfile, uploadCV }

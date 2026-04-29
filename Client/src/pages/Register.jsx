@@ -85,7 +85,6 @@ const Register = () => {
               placeholder="contoh: Frontend Developer"
               value={form.role}
               onChange={handleChange}
-              required
             />
           </div>
           <div className="form-group">

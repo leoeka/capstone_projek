@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { AuthContext } from './AuthContext'
 
@@ -10,20 +10,26 @@ export const AuthProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : null
   })
 
+  const [token, setToken] = useState(localStorage.getItem('token') || null)
+
+    const logout = useCallback(() => {
+    setUser(null)
+    setToken(null)
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+  }, [])
+
   useEffect(() => {
-    const token = localStorage.getItem('token')
     if (!token) {
       return
     }
 
     axios.get(`${API}/me`, {
       headers: { Authorization: `Bearer ${token}` }
-    }). catch (() => {
-      setUser(null)
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+    }).catch(() => {
+      logout()
     })
-  }, [])
+  }, [token, logout])
 
   const register = async (data) => {
     try {
@@ -39,6 +45,7 @@ export const AuthProvider = ({ children }) => {
       const res = await axios.post(`${API}/login`, { email, password })
       const { user, token } = res.data
       setUser(user)
+      setToken(token)
       localStorage.setItem('user', JSON.stringify(user))
       localStorage.setItem('token', token)
       return { success: true }
@@ -47,32 +54,24 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const logout = () => {
-    setUser(null)
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
-  }
-
-  const updateUser = async (data) => {
+  const updateUser = async (formData) => {
     try {
-      const token = localStorage.getItem('token')
-      const { photo, ...dataWithoutPhoto } = data
 
-      // simpan data teks ke database
-      const res = await axios.put(`${API}/profile`, dataWithoutPhoto, {
+      const res = await axios.put(`${API}/profile`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       })
-      const updated = { ...res.data.user, photo: photo || user?.photo || '' }
+      const updated = res.data.user
       setUser(updated)
       localStorage.setItem('user', JSON.stringify(updated))
       return { success: true }
     } catch (error) {
+      console.error(error);
       return { success: false, message: error.response?.data?.message || 'Gagal update profil' }
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, token, register, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   )

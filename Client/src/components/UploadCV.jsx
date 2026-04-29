@@ -1,10 +1,14 @@
 import React, { useState, useRef } from 'react'
 import './styles/UploadCV.css'
+import axios from 'axios'
+import { useAuth } from '../context/useAuth'
 
 const UploadCV = () => {
   const [file, setFile] = useState(null)
   const fileInputRef = useRef(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+  const { token } = useAuth()
 
   // const handleDrop = (e) => {
   //   e.preventDefault()
@@ -34,6 +38,29 @@ const UploadCV = () => {
 
   const openFilePicker = () => {
     fileInputRef.current.click()
+  }
+
+  const handleUpload = async () => {
+    if (!file) return
+    setIsUploading(true)
+
+    const formData = new FormData()
+    formData.append('cv', file)
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/upload-cv', formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      alert(response.data.message)
+      setFile(null)
+    } catch (error) {
+      console.error(error)
+      alert(error.response?.data?.message || 'Terjadi kesalahan saat mengunggah file CV')
+    } finally {
+      setIsUploading(false)
+    }
   }
 
   return (
@@ -81,7 +108,9 @@ const UploadCV = () => {
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
-      <button className="primary-btn upload-btn" disabled={!file}>Upload & Analisis</button>
+      <button className="primary-btn upload-btn" disabled={!file || isUploading} onClick={handleUpload}>
+        {isUploading ? 'Mengupload...' : 'Upload & Analisis'}
+      </button>
     </div>
   )
 }
