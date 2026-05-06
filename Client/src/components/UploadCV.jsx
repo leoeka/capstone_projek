@@ -90,6 +90,7 @@ const UploadCV = () => {
           clearInterval(pollingIntervalRef.current);
           setIsUploading(false);
           setStatusMessage('Analisis selesai.');
+          console.log("Result:", res.data.result);
           setAnalysisResult(res.data.result);
           setFile(null);
         } else if (res.data.status === 'failed') {
@@ -162,8 +163,40 @@ const UploadCV = () => {
       )}
       {analysisResult && (
         <div className="analysis-result-container">
-          <h3>Hasil Analisis:</h3>
-          <p>{analysisResult}</p>
+          <h3>Hasil Analisis CV</h3>
+          <div className="result-section">
+            <h4>Skill Terdeteksi</h4>
+            <div className="skill-tags">
+              {analysisResult.skills?.map((skill, i) => (
+                <span key={i} className="skill-tag">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="result-section">
+            <h4>Kategori Pekerjaan</h4>
+            <p>{analysisResult.kategori}</p>
+          </div>
+          <div className="result-section">
+            <h4>Rekomendasi Pekerjaan</h4>
+            {analysisResult.rekomendasi?.map((item, i) => (
+              <div key={i} className="rekomendasi-item">
+                <span>{item.role}</span>
+                <span className="match-pct">{item.match}% match</span>
+              </div>
+            ))}
+          </div>
+          <div className="result-section">
+            <h4>Gap Skill</h4>
+            <div className="skill-tags">
+              {analysisResult.gap_skills?.map((skill, i) => (
+                <span key={i} className="skill-tag">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
