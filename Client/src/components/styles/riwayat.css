@@ -80,6 +80,31 @@
     color: #808080;
 }
 
+.riwayat-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.btn-hapus-riwayat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #fee2e2;
+    border: none;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-hapus-riwayat:hover { background: #fecaca; }
+
 /* Kosong */
 .riwayat-kosong {
     background: #f0f4ff;

@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   })
 
   const [token, setToken] = useState(localStorage.getItem('token') || null)
+  const [cvResult, setCvResult] = useState(null)
 
     const logout = useCallback(() => {
     setUser(null)
@@ -71,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, register, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, token, register, login, logout, updateUser, cvResult, setCvResult }}>
       {children}
     </AuthContext.Provider>
   )
