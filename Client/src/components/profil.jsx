@@ -1,13 +1,14 @@
 import './styles/profil.css'
 import { Form, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../context/useAuth'
+import axios from 'axios'
 
-const skills = [
-  { name: 'JavaScript', pct: 80, color: 'green' },
-  { name: 'React', pct: 70, color: 'blue' },
-  { name: 'Node.js', pct: 60, color: 'yellow' },
-]
+// const skills = [
+//   { name: 'JavaScript', pct: 80, color: 'green' },
+//   { name: 'React', pct: 70, color: 'blue' },
+//   { name: 'Node.js', pct: 60, color: 'yellow' },
+// ]
 
 const Profil = () => {
   const navigate = useNavigate()
@@ -27,6 +28,44 @@ const Profil = () => {
   const [showLogoutModal, setShowLogoutModal] = useState(false)
   const [error, setError] = useState('')
   const [successMsg, setSuccessMsg] = useState('')
+  const [skills, setSkills] = useState([])
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const token = localStorage.getItem('token')
+
+        const res = await axios.get('http://localhost:5000/api/auth/last-cv', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+        )
+        if (res.data?.cv?.ai_result) {
+          const aiData =
+            typeof res.data.cv.ai_result === 'string'
+              ? JSON.parse(res.data.cv.ai_result)
+              : res.data.cv.ai_result;
+
+          const generatedSkills = aiData.skills?.map((skill, index) => ({
+            name: skill,
+            pct: 90 - index * 10,
+            color:
+              index % 3 === 0
+                ? 'green'
+                : index % 3 === 1
+                  ? 'blue'
+                  : 'yellow'
+          }))
+          setSkills(generatedSkills || [])
+        }
+      } catch (error) {
+        console.log('Gagal mengambil skill CV', error)
+      }
+    }
+
+    fetchSkills()
+  }, [])
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 

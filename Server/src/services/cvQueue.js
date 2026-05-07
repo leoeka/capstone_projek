@@ -3,6 +3,7 @@ const fs = require('fs');
 const PDFParser = require('pdf2json');
 const mammoth = require('mammoth');
 const axios = require('axios');
+const pool = require('../config/db');
 
 const cvAnalysisQueue = new Queue('cv-analysis', 'redis://127.0.0.1:6379');
 
@@ -54,7 +55,7 @@ const callAI = async (text) => {
 };
 
 cvAnalysisQueue.process(async (job) => {
-    const { filePath, mimetype, userId } = job.data;
+    const { filePath, mimetype, userId, cvId } = job.data;
 
     try {
         job.progress(30);
@@ -63,9 +64,20 @@ cvAnalysisQueue.process(async (job) => {
         job.progress(60);
         const aiResult = await callAI(extractedText);
 
+        await pool.query(
+            'UPDATE users_cvs SET extracted_text = $1, ai_result = $2, status_analisis = $3 WHERE id = $4',
+            [extractedText, JSON.stringify(aiResult), 'completed', cvId]
+        )
+
         job.progress(100);
         return aiResult;
     } catch (error) {
+        if (cvId) {
+            await pool.query(
+                'UPDATE users_cvs SET status_analisis = $1 WHERE id = $2',
+                ['failed', cvId]
+            )
+        }
         console.error('Error processing CV:', error);
         throw error;
     }

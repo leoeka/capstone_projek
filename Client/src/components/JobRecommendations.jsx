@@ -1,7 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 import './styles/JobRecommendations.css'
 import { useAuth } from '../context/useAuth'
+import { useState, useEffect } from 'react';
 
 const staticJobs = [
   { id: 1, company: 'PT. TechInnovate', role: 'Frontend Developer', location: 'Jakarta', match: 85 },
@@ -11,18 +13,35 @@ const staticJobs = [
 
 const JobRecommendations = () => {
   const navigate = useNavigate()
-  const { cvResult } = useAuth()
+  const { token } = useAuth()
+  const [jobs, setJobs] = useState(staticJobs)
+  const [fromCV, setFromCV] = useState(false)
+  const [kategori, setKategori] = useState(null)
 
-  const fromCV = cvResult?.rekomendasi?.length > 0
-  const jobs = fromCV
-    ? cvResult.rekomendasi.map((item, i) => ({
-        id: i + 1,
-        role: item.role,
-        match: item.match,
-        company: item.company || null,
-        location: item.location || null,
-      }))
-    : staticJobs
+  useEffect(() => {
+    const ambilHasilCV = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/auth/last-cv', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        const aiResult = JSON.parse(res.data.cv.ai_result)
+        if (aiResult?.rekomendasi?.length > 0) {
+          setJobs(aiResult.rekomendasi.map((item, i) => ({
+            id: i + 1,
+            role: item.role,
+            match: item.match,
+            company: item.company || null,
+            location: item.location || null,
+          })))
+          setFromCV(true)
+          setKategori(aiResult.kategori)
+        }
+      } catch {
+        //kalau belum ada cv, pakai data dummy
+      }
+    }
+    ambilHasilCV()
+  }, [token])
 
   return (
     <div className="job-recommendations-content">
@@ -31,7 +50,7 @@ const JobRecommendations = () => {
         {fromCV ? (
           <div className="rec-source-badge">
             <span className="badge-cv">Berdasarkan CV kamu</span>
-            {cvResult.kategori && <span className="rec-kategori">Kategori: <strong>{cvResult.kategori}</strong></span>}
+            {kategori && <span className="rec-kategori">Kategori: <strong>{kategori}</strong></span>}
           </div>
         ) : (
           <p className="rec-hint">Upload CV kamu untuk mendapatkan rekomendasi yang lebih personal.</p>
