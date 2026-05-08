@@ -24,7 +24,10 @@ const JobRecommendations = () => {
         const res = await axios.get('http://localhost:5000/api/auth/last-cv', {
           headers: { Authorization: `Bearer ${token}` }
         })
-        const aiResult = JSON.parse(res.data.cv.ai_result)
+        const aiResult = 
+        typeof res.data.cv.ai_result === 'string' 
+        ? JSON.parse(res.data.cv.ai_result) 
+        : res.data.cv.ai_result
         if (aiResult?.rekomendasi?.length > 0) {
           setJobs(aiResult.rekomendasi.map((item, i) => ({
             id: i + 1,
@@ -69,7 +72,7 @@ const JobRecommendations = () => {
               <div className="match-score">
                 Match: <span className="match-value">{job.match}%</span>
               </div>
-              <button className="secondary-btn details-btn" onClick={() => navigate(`/job/${job.id}`)}>
+              <button className="secondary-btn details-btn" onClick={() => navigate(`/job/${job.id}`, { state: { job } })}>
                 Lihat Detail
               </button>
             </div>

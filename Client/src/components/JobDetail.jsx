@@ -1,73 +1,74 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import './styles/JobDetail.css'
 
-const allJobs = [
-  {
-    id: 1,
-    company: 'PT.TechInnovate',
-    role: 'Frontend Developer',
-    location: 'Jakarta',
-    description: [
-      'Mengembangkan dan memelihara aplikasi web',
-    'Bekerja dengan tim UI/UX',
-    'Mengoptimalkan performa situs',
-  ],
-  skills: [
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'React'
-  ],
-  match: 85,
-},
-{
-  id: 2,
-  company: 'Creative Solutions',
-  role: 'Backend Developer',
-  location: 'Bandung',
-  description: [
-    'Mengembangkan dan memelihara server aplikasi',
-    'Bekerja dengan tim teknologi',
-    'Mengoptimalkan performa server'
-  ],
-  skills: [
-    'Python',
-    'Node.js',
-    'PostgreSQL',
-    'Docker'
-  ],
-  match: 90,
-},
-{
-  id: 3,
-  company: 'Global Fintech',
-  role: 'Data Analyst',
-  location: 'Surabaya',
-  description: [
-    'Menganalisis data untuk memberikan wawasan bisnis',
-    'Membuat laporan dan presentasi data',
-    'Bekerja dengan tim data science'
-  ],
-  skills: [
-    'Python',
-    'SQL',
-    'Tableau',
-    'Power BI'
-  ],
-  match: 80
-},
-]
+// const allJobs = [
+//   {
+//     id: 1,
+//     company: 'PT.TechInnovate',
+//     role: 'Frontend Developer',
+//     location: 'Jakarta',
+//     description: [
+//       'Mengembangkan dan memelihara aplikasi web',
+//     'Bekerja dengan tim UI/UX',
+//     'Mengoptimalkan performa situs',
+//   ],
+//   skills: [
+//     'HTML',
+//     'CSS',
+//     'JavaScript',
+//     'React'
+//   ],
+//   match: 85,
+// },
+// {
+//   id: 2,
+//   company: 'Creative Solutions',
+//   role: 'Backend Developer',
+//   location: 'Bandung',
+//   description: [
+//     'Mengembangkan dan memelihara server aplikasi',
+//     'Bekerja dengan tim teknologi',
+//     'Mengoptimalkan performa server'
+//   ],
+//   skills: [
+//     'Python',
+//     'Node.js',
+//     'PostgreSQL',
+//     'Docker'
+//   ],
+//   match: 90,
+// },
+// {
+//   id: 3,
+//   company: 'Global Fintech',
+//   role: 'Data Analyst',
+//   location: 'Surabaya',
+//   description: [
+//     'Menganalisis data untuk memberikan wawasan bisnis',
+//     'Membuat laporan dan presentasi data',
+//     'Bekerja dengan tim data science'
+//   ],
+//   skills: [
+//     'Python',
+//     'SQL',
+//     'Tableau',
+//     'Power BI'
+//   ],
+//   match: 80
+// },
+// ]
 
 const JobDetail = () => {
-  const { id } = useParams()
+  // const { id } = useParams()
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
   const [sudahDisimpan, setSudahDisimpan] = useState(false)
 
-  const jobDetail = allJobs.find((job) => job.id === parseInt(id))
+  const location = useLocation()
+  const jobDetail = location.state?.job
 
   if (!jobDetail) {
     return <div className="job-detail-content">Pekerjaan tidak ditemukan.</div>
@@ -112,9 +113,15 @@ const JobDetail = () => {
       <div className="detail-section">
         <div className="job-description">
           <h3>Deskripsi Pekerjaan</h3>
-          <ul>
-            {jobDetail.description.map((item, i) => <li key={i}>{item}</li>)}
-          </ul>
+          {jobDetail.description?.length > 0 ? (
+            <ul>
+              {jobDetail.description.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>Belum ada deskripsi pekerjaan.</p>
+          )}
         </div>
         <div className="match-circle-container">
           <p className="match-label">Kecocokan Anda</p>
@@ -134,9 +141,15 @@ const JobDetail = () => {
 
       <div className="skill-section">
         <h3>Skill Dibutuhkan</h3>
-        <ul>
-          {jobDetail.skills.map((skill, i) => <li key={i}>{skill}</li>)}
-        </ul>
+        {jobDetail.skills?.length > 0 ? (
+          <ul>
+            {jobDetail.skills.map((skill, i) => (
+              <li key={i}>{skill}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>Belum ada skill yang dibutuhkan.</p>
+        )}
       </div>
 
       <button className="primary-btn apply-btn" onClick={() => setShowModal(true)} disabled={sudahDisimpan}>
