@@ -1,10 +1,8 @@
 const Queue = require('bull');
-const fs = require('fs');
 const PDFParser = require('pdf2json');
 const mammoth = require('mammoth');
 const axios = require('axios');
 const pool = require('../config/db');
-const { match } = require('assert');
 
 const cvAnalysisQueue = new Queue('cv-analysis', 'redis://127.0.0.1:6379');
 
@@ -14,15 +12,14 @@ const extractText = async (filePath, mimetype) => {
             const pdfParser = new PDFParser()
             pdfParser.on("pdfParser_dataReady", (data) => {
                 const text = data.Pages
-                    // .map(page => page.Texts.map(t => decodeURIComponent(t.R[0].T)).join(' '))
-                    // .join('\n');
-                    .map(page=> page.Texts.map(t=> {
+                    .map(page => page.Texts.map(t => {
                         try {
-                            return decodeURLComponent(t.R[0].T)
+                            return decodeURIComponent(t.R[0].T)
                         } catch {
                             return t.R[0].T
                         }
                     }).join(' '))
+                    .join('\n')
                 resolve(text);
             })
             pdfParser.on('pdfParser_dataError', reject)
@@ -36,31 +33,15 @@ const extractText = async (filePath, mimetype) => {
 };
 
 const callAI = async (text) => {
-    // return {
-    //     skills: ['JavaScript', 'Node.js'],
-    //     kategori: 'Software Engineer',
-    //     rekomendasi: [
-    //         { role: 'Frontend Developer', match: 85 },
-    //         { role: 'Backend Developer', match: 75 },
-    //     ],
-    //     gap_skills: ['Docker', 'TypeScript']
-    // }
-    //const aiEndpoint = 'https://api.openai.com/analyze-cv'; // Replace with actual AI endpoint
     const teksCV = Array.isArray(text) ? text.join(' ') : text
     const response = await axios.post('http://127.0.0.1:8000/api/v1/predict', {
         teks_cv: teksCV
     }, {
         headers: { 'Content-Type': 'application/json' }
-    });
-    const {kategori, confidence} = response.data
-    return {
-        kategori,
-        confidence,
-        skill:[],
-        gap_skill:[],
-        rekomendasi: rekomendasiByKategori[kategori] || {role:'General Staff', match:70}}
-    }
-    //return response.data;
+    })
+    return response.data
+}
+
 
 cvAnalysisQueue.process(async (job) => {
     const { filePath, mimetype, userId, cvId } = job.data;

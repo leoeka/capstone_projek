@@ -4,12 +4,6 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/useAuth'
 import axios from 'axios'
 
-// const skills = [
-//   { name: 'JavaScript', pct: 80, color: 'green' },
-//   { name: 'React', pct: 70, color: 'blue' },
-//   { name: 'Node.js', pct: 60, color: 'yellow' },
-// ]
-
 const Profil = () => {
   const navigate = useNavigate()
   const { user, updateUser, logout } = useAuth()
