@@ -4,7 +4,7 @@ const mammoth = require('mammoth');
 const axios = require('axios');
 const pool = require('../config/db');
 
-const cvAnalysisQueue = new Queue('cv-analysis', 'redis://127.0.0.1:6379');
+const cvAnalysisQueue = new Queue('cv-analysis', /*'redis://127.0.0.1:6379'*/process.env.REDIS_URL);
 
 const extractText = async (filePath, mimetype) => {
     if (mimetype === 'application/pdf') {
@@ -34,7 +34,7 @@ const extractText = async (filePath, mimetype) => {
 
 const callAI = async (text) => {
     const teksCV = Array.isArray(text) ? text.join(' ') : text
-    const response = await axios.post('http://127.0.0.1:8000/api/v1/predict', {
+    const response = await axios.post(/*'http://127.0.0.1:8000/api/v1/predict'*/`${process.env.AI_BACKEND_URL}/api/v1/predict`, {
         teks_cv: teksCV
     }, {
         headers: { 'Content-Type': 'application/json' }
