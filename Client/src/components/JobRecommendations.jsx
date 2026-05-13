@@ -5,29 +5,29 @@ import './styles/JobRecommendations.css'
 import { useAuth } from '../context/useAuth'
 import { useState, useEffect } from 'react';
 
-const staticJobs = [
-  { id: 1, company: 'PT. TechInnovate', role: 'Frontend Developer', location: 'Jakarta', match: 85 },
-  { id: 2, company: 'Creative Solutions', role: 'UI-UX Designer', location: 'Bandung', match: 72 },
-  { id: 3, company: 'Global Fintech', role: 'Data Analyst', location: 'Surabaya', match: 60 },
-]
+// const staticJobs = [
+//   { id: 1, company: 'PT. TechInnovate', role: 'Frontend Developer', location: 'Jakarta', match: 85 },
+//   { id: 2, company: 'Creative Solutions', role: 'UI-UX Designer', location: 'Bandung', match: 72 },
+//   { id: 3, company: 'Global Fintech', role: 'Data Analyst', location: 'Surabaya', match: 60 },
+// ]
 
 const JobRecommendations = () => {
   const navigate = useNavigate()
   const { token } = useAuth()
-  const [jobs, setJobs] = useState(staticJobs)
+  const [jobs, setJobs] = useState([])
   const [fromCV, setFromCV] = useState(false)
   const [kategori, setKategori] = useState(null)
 
   useEffect(() => {
     const ambilHasilCV = async () => {
       try {
-         const res = await axios.get(/*'http://localhost:5000/api/auth/last-cv'*/`${import.meta.env.VITE_API_URL}/api/auth/last-cv`, {
+        const res = await axios.get(/*'http://localhost:5000/api/auth/last-cv'*/`${import.meta.env.VITE_API_URL}/api/auth/last-cv`, {
           headers: { Authorization: `Bearer ${token}` }
         })
-        const aiResult = 
-        typeof res.data.cv.ai_result === 'string' 
-        ? JSON.parse(res.data.cv.ai_result) 
-        : res.data.cv.ai_result
+        const aiResult =
+          typeof res.data.cv.ai_result === 'string'
+            ? JSON.parse(res.data.cv.ai_result)
+            : res.data.cv.ai_result
         if (aiResult?.rekomendasi?.length > 0) {
           setJobs(aiResult.rekomendasi.map((item, i) => ({
             id: i + 1,
@@ -60,25 +60,29 @@ const JobRecommendations = () => {
         )}
       </div>
 
-      <div className="jobs-list">
-        {jobs.map((job) => (
-          <div key={job.id} className="job-card">
-            <div className="job-info">
-              <h3>{job.role}</h3>
-              {job.company && <p className="job-company">{job.company}</p>}
-              {job.location && <p className="job-location">📍 {job.location}</p>}
-            </div>
-            <div className="job-right">
-              <div className="match-score">
-                Match: <span className="match-value">{job.match}%</span>
+      {jobs.length === 0 ? (
+        <p className="no-jobs">Upload CV kamu untuk mendapatkan rekomendasi yang lebih personal.</p>
+      ) : (
+        <div className="jobs-list">
+          {jobs.map((job) => (
+            <div key={job.id} className="job-card">
+              <div className="job-info">
+                <h3>{job.role}</h3>
+                {job.company && <p className="job-company">{job.company}</p>}
+                {job.location && <p className="job-location">📍 {job.location}</p>}
               </div>
-              <button className="secondary-btn details-btn" onClick={() => navigate(`/job/${job.id}`, { state: { job } })}>
-                Lihat Detail
-              </button>
+              <div className="job-right">
+                <div className="match-score">
+                  Match: <span className="match-value">{job.match}%</span>
+                </div>
+                <button className="secondary-btn details-btn" onClick={() => navigate(`/job/${job.id}`, { state: { job } })}>
+                  Lihat Detail
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
