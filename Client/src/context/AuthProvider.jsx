@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { AuthContext } from './AuthContext'
 
-const API = 'http://localhost:5000/api/auth'
+// const API = 'http://localhost:5000/api/auth'
+const API = `${import.meta.env.VITE_API_URL}/api/auth`
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {

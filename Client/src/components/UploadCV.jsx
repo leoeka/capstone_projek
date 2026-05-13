@@ -47,7 +47,7 @@ const UploadCV = () => {
     formData.append('cv', file)
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/upload-cv', formData, {
+      const response = await axios.post(/*'http://localhost:5000/api/auth/upload-cv'*/`${import.meta.env.VITE_API_URL}/api/auth/upload-cv`, formData, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       setStatusMessage('File berhasil diunggah. Menunggu analisis...')
@@ -64,7 +64,7 @@ const UploadCV = () => {
     if (pollingIntervalRef.current) clearInterval(pollingIntervalRef.current)
     pollingIntervalRef.current = setInterval(async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/auth/check-cv-status/${jobId}`, {
+        const res = await axios.get(/*'http://localhost:5000/api/auth/check-cv-status/${jobId}'*/`${import.meta.env.VITE_API_URL}/api/auth/check-cv-status/${jobId}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         })
         if (res.data.status === 'completed') {

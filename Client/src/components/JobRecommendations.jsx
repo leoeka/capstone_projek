@@ -21,7 +21,7 @@ const JobRecommendations = () => {
   useEffect(() => {
     const ambilHasilCV = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/auth/last-cv', {
+         const res = await axios.get(/*'http://localhost:5000/api/auth/last-cv'*/`${import.meta.env.VITE_API_URL}/api/auth/last-cv`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         const aiResult = 

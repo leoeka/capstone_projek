@@ -29,7 +29,7 @@ const Profil = () => {
       try {
         const token = localStorage.getItem('token')
 
-        const res = await axios.get('http://localhost:5000/api/auth/last-cv', {
+         const res = await axios.get(/*'http://localhost:5000/api/auth/last-cv'*/`${import.meta.env.VITE_API_URL}/api/auth/last-cv`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -109,7 +109,7 @@ const Profil = () => {
         <div className="profil-avatar">
           {(previewUrl || user?.photo) ? (
             <img
-              src={previewUrl || `http://localhost:5000${user.photo}`}
+              src={previewUrl || /*`http://localhost:5000${user.photo}`*/ `${import.meta.env.VITE_API_URL}${user.photo}`}
               alt="profile"
               className="avatar-img"
             />
