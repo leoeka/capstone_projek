@@ -56,7 +56,7 @@ const JobRecommendations = () => {
             {kategori && <span className="rec-kategori">Kategori: <strong>{kategori}</strong></span>}
           </div>
         ) : (
-          <p className="rec-hint">Upload CV kamu untuk mendapatkan rekomendasi yang lebih personal.</p>
+          <p className="rec-hint"></p>
         )}
       </div>
 
