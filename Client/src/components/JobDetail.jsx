@@ -114,10 +114,10 @@ const JobDetail = () => {
       <div className="detail-section">
         <div className="job-description">
           <h3>Informasi Pekerjaan</h3>
-          <p>Perusahaan: <strong>{jobDetail.company}</strong></p>
-          <p>Lokasi Kerja: <strong>{jobDetail.location}</strong></p>
+          <p>🏢 Perusahaan: <strong>{jobDetail.company}</strong></p>
+          <p>📍 Lokasi Kerja: <strong>{jobDetail.location}</strong></p>
           {jobDetail.salary && (
-            <p>Estimasi Gaji: <strong>${jobDetail.salary.toLocaleString()}/tahun</strong></p>
+            <p>💰 Estimasi Gaji: <strong>${jobDetail.salary.toLocaleString()}/tahun</strong></p>
           )}
         </div>
         <div className="match-circle-container">

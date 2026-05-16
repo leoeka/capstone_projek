@@ -70,8 +70,6 @@ const JobRecommendations = () => {
             <div key={job.id} className="job-card">
               <div className="job-info">
                 <h3>{job.role}</h3>
-                {job.company && <p className="job-company">{job.company}</p>}
-                {job.location && <p className="job-location">📍 {job.location}</p>}
               </div>
               <div className="job-right">
                 <div className="match-score">
