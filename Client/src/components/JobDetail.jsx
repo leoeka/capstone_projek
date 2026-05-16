@@ -113,18 +113,12 @@ const JobDetail = () => {
 
       <div className="detail-section">
         <div className="job-description">
-          <h3>Deskripsi Pekerjaan</h3>
-          <ul>
-            <li>Posisi yang dibutuhkan: <strong>{jobDetail.role}</strong></li>
-            <li>Perusahaan: <strong>{jobDetail.company}</strong></li>
-            <li>Lokasi Kerja: <strong>{jobDetail.location}</strong></li>
-            {jobDetail.salary && (
-              <li>Estimasi Gaji: <strong>${jobDetail.salary.toLocaleString()}/tahun</strong></li>
-            )}
-            {jobDetail.skills?.length > 0 && (
-              <li>Skill Dibutuhkan: <strong>{jobDetail.skills.join(', ')}</strong></li>
-            )}
-          </ul>
+          <h3>Informasi Pekerjaan</h3>
+          <p>Perusahaan: <strong>{jobDetail.company}</strong></p>
+          <p>Lokasi Kerja: <strong>{jobDetail.location}</strong></p>
+          {jobDetail.salary && (
+            <p>Estimasi Gaji: <strong>${jobDetail.salary.toLocaleString()}/tahun</strong></p>
+          )}
         </div>
         <div className="match-circle-container">
           <p className="match-label">Kecocokan Anda</p>
@@ -154,12 +148,6 @@ const JobDetail = () => {
           <p>Belum ada skill yang dibutuhkan.</p>
         )}
       </div>
-      {jobDetail.salary && (
-        <div className="salary-section">
-          <h3>Estimasi Gaji</h3>
-          <p className="job-salary">💰 ${jobDetail.salary.toLocaleString()}/tahun</p>
-        </div>
-      )}
 
       <button className="primary-btn apply-btn" onClick={() => setShowModal(true)} disabled={sudahDisimpan}>
         {sudahDisimpan ? 'Sudah Disimpan' : 'Simpan Pekerjaan Ini'}
