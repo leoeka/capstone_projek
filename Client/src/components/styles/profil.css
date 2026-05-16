@@ -107,6 +107,21 @@
     text-align: right;
 }
 
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background: #dbeafe;
+    color:  #1e40af;
+    padding: 5px 12px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
 .button-group {
     display: flex;
     gap: 12px;

@@ -29,7 +29,7 @@ const Profil = () => {
       try {
         const token = localStorage.getItem('token')
 
-         const res = await axios.get(/*'http://localhost:5000/api/auth/last-cv'*/`${import.meta.env.VITE_API_URL}/api/auth/last-cv`, {
+        const res = await axios.get(/*'http://localhost:5000/api/auth/last-cv'*/`${import.meta.env.VITE_API_URL}/api/auth/last-cv`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -170,16 +170,18 @@ const Profil = () => {
 
       {/* Skill Gap */}
       <div className="profil-section">
-        <h3>Analisis Skill</h3>
-        {skills.map((skill) => (
-          <div key={skill.name} className="skill-row">
-            <span className="skill-label">{skill.name}</span>
-            <div className="skill-track">
-              <div className={`skill-fill fill-${skill.color}`} style={{ width: `${skill.pct}%` }} />
-            </div>
-            <span className={`skill-pct text-${skill.color}`}>{skill.pct}%</span>
+        <h3>Skill dari CV</h3>
+        {skills.length > 0 ? (
+          <div className="skill-tags">
+            {skills.map((skill, i) => (
+              <span key={i} className="skill-tag">{skill.name}</span>
+            ))}
           </div>
-        ))}
+        ) : (
+          <p style={{ fontSize: '13px', color: '#94a3b8' }}>
+            Upload CV untuk melihat skill Anda
+          </p>
+        )}
       </div>
 
       {/* Tombol */}
