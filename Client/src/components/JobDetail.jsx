@@ -116,9 +116,15 @@ const JobDetail = () => {
           <h3>Deskripsi Pekerjaan</h3>
           {jobDetail.description?.length > 0 ? (
             <ul>
-              {jobDetail.description.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
+              <li>Posisi yang dibutuhkan: <strong>{jobDetail.role}</strong></li>
+              <li>Perusahaan: <strong>{jobDetail.company}</strong></li>
+              <li>Lokasi Kerja: <strong>{jobDetail.location}</strong></li>
+              {jobDetail.salary && (
+                <li>Estimasi Gaji: <strong>${jobDetail.salary.toLocaleString()}/tahun</strong></li>
+              )}
+              {jobDetail.skills?.length > 0 && (
+                <li>Skill Dibutuhkan: <strong>{jobDetail.skills.join(', ')}</strong></li>
+              )}
             </ul>
           ) : (
             <p>Belum ada deskripsi pekerjaan.</p>
