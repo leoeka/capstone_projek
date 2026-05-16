@@ -69,6 +69,7 @@ const JobDetail = () => {
 
   const location = useLocation()
   const jobDetail = location.state?.job
+  console.log('jobDetail diterima:', jobDetail)
 
   if (!jobDetail) {
     return <div className="job-detail-content">Pekerjaan tidak ditemukan.</div>
