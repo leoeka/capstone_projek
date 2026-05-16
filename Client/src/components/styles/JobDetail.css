@@ -68,6 +68,24 @@
 
 .apply-btn { margin-top: 8px; }
 
+.salary-section {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.salary-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1b2b5e;
+  margin-bottom: 6px;
+}
+
+.job-salary {
+  font-size: 15px;
+  font-weight: 600;
+  color: #16a34a;
+}
+
 @media (max-width: 600px) {
   .detail-section {
     flex-direction: column;

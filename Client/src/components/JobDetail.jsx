@@ -151,6 +151,12 @@ const JobDetail = () => {
           <p>Belum ada skill yang dibutuhkan.</p>
         )}
       </div>
+      {jobDetail.salary && (
+        <div className="salary-section">
+          <h3>Estimasi Gaji</h3>
+          <p className="job-salary">💰 ${jobDetail.salary.toLocaleString()}/tahun</p>
+        </div>
+      )}
 
       <button className="primary-btn apply-btn" onClick={() => setShowModal(true)} disabled={sudahDisimpan}>
         {sudahDisimpan ? 'Sudah Disimpan' : 'Simpan Pekerjaan Ini'}

@@ -31,10 +31,12 @@ const JobRecommendations = () => {
         if (aiResult?.rekomendasi?.length > 0) {
           setJobs(aiResult.rekomendasi.map((item, i) => ({
             id: i + 1,
-            role: item.role,
+            role: item.job_title,
             match: item.match,
             company: item.company || null,
             location: item.location || null,
+            salary: item.salary || null,
+            skills: item.skills_dibutuhkan || [],
           })))
           setFromCV(true)
           setKategori(aiResult.kategori)
