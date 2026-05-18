@@ -118,7 +118,7 @@ const Dashboard = () => {
                   <div className="job-summary">
                     <div>
                       <p className="job-role">
-                        {topRecommendation?.role || 'Tidak ada rekomendasi'}
+                        {topRecommendation?.job_title || 'Tidak ada rekomendasi'}
                       </p>
                       <p className="job-desc">
                         Berdasarkan hasil analisis CV Anda yang terbaru
